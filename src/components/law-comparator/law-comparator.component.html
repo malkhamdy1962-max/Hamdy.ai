@@ -1,0 +1,29 @@
+<div class="flex flex-col h-full w-full bg-slate-900/50 rounded-lg border border-slate-800 shadow-2xl p-6 space-y-6">
+  <h2 class="text-2xl font-bold text-slate-200">Legal Text Comparator</h2>
+  <div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="flex flex-col space-y-2">
+      <label for="lawText1" class="font-semibold text-slate-400">Source Text 1</label>
+      <textarea id="lawText1" [(ngModel)]="lawText1" class="w-full h-full p-3 bg-slate-800 border border-slate-700 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Paste the first legal text here..."></textarea>
+    </div>
+    <div class="flex flex-col space-y-2">
+      <label for="lawText2" class="font-semibold text-slate-400">Source Text 2</label>
+      <textarea id="lawText2" [(ngModel)]="lawText2" class="w-full h-full p-3 bg-slate-800 border border-slate-700 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Paste the second legal text here..."></textarea>
+    </div>
+  </div>
+  <div class="flex-shrink-0">
+    <button (click)="compareTexts()" [disabled]="isLoading()" class="w-full bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-500 disabled:bg-slate-700 disabled:cursor-not-allowed transition-colors">
+      Compare Texts
+    </button>
+  </div>
+  @if(isLoading()) {
+    <div class="p-4 bg-slate-800 rounded-lg flex justify-center">
+        <app-cognitive-stream></app-cognitive-stream>
+    </div>
+  }
+  @if (comparisonResult()) {
+    <div class="flex-grow p-4 bg-slate-800 rounded-lg overflow-y-auto">
+      <h3 class="text-lg font-semibold mb-2 text-slate-200">Comparison Result:</h3>
+      <div class="prose prose-invert max-w-none" [innerHTML]="comparisonResult() | safeHtml"></div>
+    </div>
+  }
+</div>
